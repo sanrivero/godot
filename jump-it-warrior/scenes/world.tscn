@@ -1,0 +1,81 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/world.gd" type="Script" id=1]
+[ext_resource path="res://tiles/castle_tiles.tres" type="TileSet" id=2]
+[ext_resource path="res://scenes/player.tscn" type="PackedScene" id=3]
+
+[node name="world" type="Node" index="0"]
+
+script = ExtResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="0"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="spawn_1" type="Node2D" parent="CanvasLayer" index="0"]
+
+[node name="Position2D" type="Position2D" parent="CanvasLayer/spawn_1" index="0"]
+
+position = Vector2( 618.781, 189.072 )
+
+[node name="spawn_2" type="Node2D" parent="CanvasLayer" index="1"]
+
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Position2D" type="Position2D" parent="CanvasLayer/spawn_2" index="0"]
+
+position = Vector2( 620.008, 358.5 )
+
+[node name="spawn_3" type="Node2D" parent="CanvasLayer" index="2"]
+
+[node name="Position2D" type="Position2D" parent="CanvasLayer/spawn_3" index="0"]
+
+position = Vector2( 613.87, 27.0103 )
+
+[node name="Timer" type="Timer" parent="." index="1"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = true
+
+[node name="TileMap" type="TileMap" parent="." index="2"]
+
+mode = 0
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 16, 16 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray( 1507328, 0, 0, 1507329, 0, 0, 1507330, 0, 0, 1507331, 0, 0, 1507332, 0, 0, 1507333, 0, 0, 1507334, 0, 0, 1507335, 0, 0, 1507336, 0, 0, 1507337, 0, 0, 1507338, 0, 0, 1507339, 0, 0, 1507340, 0, 0, 1507341, 0, 0, 1507342, 0, 0, 1507343, 0, 0, 1507344, 0, 0, 1507345, 0, 0, 1507346, 0, 0, 1507347, 0, 0, 1507348, 0, 0, 1507349, 0, 0, 1507350, 0, 0, 1507351, 0, 0, 1507352, 0, 0, 1507353, 0, 0, 1507354, 0, 0, 1507355, 0, 0, 1507356, 0, 0, 1507357, 0, 0, 1507358, 0, 0, 1507359, 0, 0, 1507360, 0, 0, 1507361, 0, 0, 1507362, 0, 0, 1507363, 0, 0, 1507364, 0, 0 )
+_sections_unfolded = [ "Cell" ]
+
+[node name="player" parent="." index="3" instance=ExtResource( 3 )]
+
+position = Vector2( 3.34033, 267.596 )
+
+[node name="spawn_1" type="Node2D" parent="." index="4"]
+
+[node name="spawn_2" type="Node2D" parent="." index="5"]
+
+[node name="spawn_3" type="Node2D" parent="." index="6"]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+

@@ -1,0 +1,182 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Actors/char.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Actors/Enemy/Skeleton.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/States/SkeletonStates/attack_skeleton_state.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/States/SkeletonStates/dead_skeleton_state.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/States/SkeletonStates/hit_skeleton_state.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/States/SkeletonStates/run_skeleton_state.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/States/SkeletonStates/idle_skeleton_state.gd" type="Script" id=7]
+[ext_resource path="res://Monster/skeleton/sprites/skeleton_all_anim.png" type="Texture" id=8]
+[ext_resource path="res://Scripts/Weapon/Skeleton/Attack.gd" type="Script" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10.4398, 5.69995 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 5.24884, 8.2904 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 10.2127, 5.7786 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 5.19736, 7.8344 )
+
+[sub_resource type="Animation" id=5]
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Images:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("pivot/Attack/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+
+[sub_resource type="Animation" id=6]
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Images:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 10, 11, 12 ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Images:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 8, 9 ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Images:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 17, 18, 19, 20 ]
+}
+
+[node name="Skeleton" groups=[
+"Enemies",
+] instance=ExtResource( 1 )]
+collision_layer = 9
+collision_mask = 9
+script = ExtResource( 2 )
+speed = 25.0
+jump_duration = 0.3
+
+[node name="Images" parent="pivot" index="0"]
+texture = ExtResource( 8 )
+hframes = 21
+frame = 12
+
+[node name="AttackArea" type="Area2D" parent="pivot" index="1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/AttackArea" index="0"]
+position = Vector2( 15.7189, 8.71282 )
+shape = SubResource( 1 )
+
+[node name="DamageDetector" type="Area2D" parent="pivot" index="2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/DamageDetector" index="0"]
+position = Vector2( 0.60535, 7.99064 )
+shape = SubResource( 2 )
+
+[node name="RayCast2D" type="RayCast2D" parent="pivot" index="3"]
+position = Vector2( 7, 9 )
+enabled = true
+exclude_parent = false
+cast_to = Vector2( 5, 0 )
+collision_mask = 8
+
+[node name="RayCast2D2" type="RayCast2D" parent="pivot" index="4"]
+position = Vector2( 7, 13 )
+enabled = true
+cast_to = Vector2( 0, 10 )
+collision_mask = 8
+
+[node name="Attack" type="Area2D" parent="pivot" index="5" groups=[
+"EnemyWeapon",
+]]
+script = ExtResource( 9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/Attack" index="0"]
+position = Vector2( 16.2234, 8.9592 )
+shape = SubResource( 3 )
+disabled = true
+
+[node name="Collision" parent="." index="1"]
+position = Vector2( 0, 8.09004 )
+shape = SubResource( 4 )
+
+[node name="Idle" type="Node" parent="StateMachine" index="0"]
+script = ExtResource( 7 )
+
+[node name="Run" type="Node" parent="StateMachine" index="1"]
+script = ExtResource( 6 )
+
+[node name="Attack" type="Node" parent="StateMachine" index="2"]
+script = ExtResource( 3 )
+
+[node name="Hit" type="Node" parent="StateMachine" index="3"]
+script = ExtResource( 5 )
+
+[node name="Dead" type="Node" parent="StateMachine" index="4"]
+script = ExtResource( 4 )
+
+[node name="Anim" parent="." index="3"]
+anims/attack = SubResource( 5 )
+anims/dead = SubResource( 6 )
+anims/hit = SubResource( 7 )
+anims/run = SubResource( 8 )
+
+[node name="Label" type="Label" parent="." index="4"]
+margin_left = -14.3042
+margin_top = -15.6796
+margin_right = 25.6958
+margin_bottom = -1.67959
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="health_changed" from="." to="." method="_on_Skeleton_health_changed"]
+[connection signal="body_entered" from="pivot/AttackArea" to="." method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="pivot/AttackArea" to="." method="_on_AttackArea_body_exited"]
+[connection signal="area_entered" from="pivot/DamageDetector" to="." method="_on_DamageDetector_area_entered"]

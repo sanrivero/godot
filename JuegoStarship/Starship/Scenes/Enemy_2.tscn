@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Assets/Enemys/Enemy_2/enemy_2_cannon.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Enemys/Enemy_2/enemy_2.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Enemy_2.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Fire.tscn" type="PackedScene" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 288, 179 )
+
+[node name="Enemy_2" type="Area2D"]
+collision_layer = 8
+script = ExtResource( 3 )
+
+[node name="Ship" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="Cannon" type="Sprite" parent="."]
+position = Vector2( 0, -4 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, 4 )
+
+[node name="Shoot_position" type="Position2D" parent="Cannon"]
+position = Vector2( 13, 0 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -2, 17, -11, 11, -20, -8, -20, -13, -10, -16, 10, -16, 20, -13, 20, -8, 11, 11, 2, 17 )
+
+[node name="Position2D" type="Position2D" parent="."]
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[node name="Player_detector" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player_detector"]
+position = Vector2( 0, 179 )
+shape = SubResource( 1 )
+
+[node name="Fire" parent="." instance=ExtResource( 4 )]
+position = Vector2( -8, -26 )
+rotation = 3.14159
+
+[node name="Fire2" parent="." instance=ExtResource( 4 )]
+position = Vector2( -1, -26 )
+rotation = 3.14159
+
+[node name="Fire3" parent="." instance=ExtResource( 4 )]
+position = Vector2( 6, -26 )
+rotation = 3.14159
+[connection signal="area_entered" from="." to="." method="_on_Enemy_2_area_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="area_entered" from="Player_detector" to="." method="_on_Player_detector_area_entered"]

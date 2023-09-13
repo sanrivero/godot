@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/katana_01.ogg-ac5fa1f33f412ec776c761a2ddb19d08.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Player/katana_01.ogg"
+dest_files=[ "res://.import/katana_01.ogg-ac5fa1f33f412ec776c761a2ddb19d08.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

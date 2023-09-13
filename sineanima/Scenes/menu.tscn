@@ -1,0 +1,77 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Scripts/menu.gd" type="Script" id=1]
+[ext_resource path="res://Images/GUI/menu/playButton1.png" type="Texture" id=2]
+[ext_resource path="res://Images/GUI/menu/optionsButton1.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/volumen.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/parallax_menu.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Parallax/mountains/background.png" type="Texture" id=6]
+[ext_resource path="res://Images/GUI/menu/menuPrincipal.png" type="Texture" id=8]
+[ext_resource path="res://Images/GUI/menu/playButton2.png" type="Texture" id=9]
+[ext_resource path="res://Images/GUI/menu/optionsButton2.png" type="Texture" id=10]
+
+[node name="menu" type="Control"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 219.475
+margin_top = 43.9645
+margin_right = 326.475
+margin_bottom = 171.964
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 243.475
+margin_top = 74.9645
+margin_right = 304.475
+margin_bottom = 97.9645
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SettingsButton" type="TextureButton" parent="."]
+margin_left = 261.475
+margin_top = 116.964
+margin_right = 284.475
+margin_bottom = 139.964
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SettingsPopUpMenu" parent="." instance=ExtResource( 4 )]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scroll_offset = Vector2( 2, 0 )
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.2, 0.2 )
+motion_mirroring = Vector2( 256, 256 )
+script = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2( 129.554, 128.345 )
+texture = ExtResource( 6 )
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2( 511.249, -1.18578 )
+motion_scale = Vector2( 0.2, 0.2 )
+motion_mirroring = Vector2( 256, 256 )
+script = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2( 129.554, 128.345 )
+texture = ExtResource( 6 )
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="SettingsButton" to="." method="_on_SettingsButton_pressed"]

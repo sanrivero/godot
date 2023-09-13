@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bat.ogg-bc653453815ba03276b742ae74428aec.oggstr"
+
+[deps]
+
+source_file="res://Monster/bat/sound/bat.ogg"
+dest_files=[ "res://.import/bat.ogg-bc653453815ba03276b742ae74428aec.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

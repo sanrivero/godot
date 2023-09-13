@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scenes/Effects/Leaf_material.tres" type="Material" id=1]
+[ext_resource path="res://Assets/Enviroment/green_tree.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Enviroment/green_tree_leaf.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Enviroment/Enviroment.tscn" type="PackedScene" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 9.05522, 70.252 )
+
+[node name="Tree" instance=ExtResource( 4 )]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 2 )
+
+[node name="Particles2D" parent="." index="1"]
+position = Vector2( -3.99149, -11.3092 )
+scale = Vector2( 0.28, 0.28 )
+amount = 3
+lifetime = 10.0
+process_material = ExtResource( 1 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2( -2.27266, 8.24896 )
+scale = Vector2( 0.809373, 0.946168 )
+shape = SubResource( 1 )

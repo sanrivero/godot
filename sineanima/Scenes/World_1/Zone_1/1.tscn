@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Mundo/Zone_Grass.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/World_1/Zone_1/1.gd" type="Script" id=2]
+
+[node name="Node2D" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="TileMap" parent="." index="0"]
+tile_data = PoolIntArray( 196610, 0, 131076, 196611, 0, 131077, 196612, 0, 131078, 262161, 0, 131076, 262162, 0, 131078, 393230, 0, 131076, 393231, 0, 131078, 458757, 0, 0, 458758, 0, 1, 458759, 0, 1, 458760, 0, 1, 458761, 0, 2, 524293, 0, 65536, 524294, 0, 65537, 524295, 0, 65537, 524296, 0, 65537, 524297, 0, 6, 524298, 0, 2, 589824, 0, 131076, 589825, 0, 131077, 589826, 0, 131077, 589827, 0, 131077, 589828, 0, 131077, 589829, 0, 393221, 589830, 0, 131073, 589831, 0, 131073, 589832, 0, 131073, 589833, 0, 131073, 589834, 0, 393220, 589835, 0, 131077, 589836, 0, 131077, 589837, 0, 131077, 589838, 0, 131077, 589839, 0, 131077, 589840, 0, 131077, 589841, 0, 131077, 589842, 0, 131077, 589843, 0, 131078 )
+
+[node name="Position2D" parent="spawn_enviroment" index="0"]
+position = Vector2( 383.324, 298.969 )
+
+[node name="spawn_monster" parent="." index="3"]
+position = Vector2( -0.448029, 26.1585 )
+
+[node name="Position2D" parent="spawn_monster" index="0"]
+position = Vector2( 241.048, 185.743 )
+
+[node name="CollisionShape2D" parent="RoomBoundaries" index="0"]
+position = Vector2( 382.356, 186.595 )

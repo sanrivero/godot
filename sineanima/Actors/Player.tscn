@@ -1,0 +1,339 @@
+[gd_scene load_steps=29 format=2]
+
+[ext_resource path="res://Actors/char.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Actors/Player/player.png" type="Texture" id=2]
+[ext_resource path="res://Actors/Camera2D.gd" type="Script" id=3]
+[ext_resource path="res://Actors/scripts/character_main.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/States/PlayerStates/dash_default_state.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/States/PlayerStates/idle_default_state.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/States/PlayerStates/run_default_state.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/States/PlayerStates/jump_default_state.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/States/PlayerStates/fall_default_state.gd" type="Script" id=9]
+[ext_resource path="res://Scripts/States/PlayerStates/dead_default_state.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/States/PlayerStates/attack_default_state.gd" type="Script" id=11]
+[ext_resource path="res://Scripts/States/PlayerStates/hit_default_state.gd" type="Script" id=12]
+[ext_resource path="res://Scripts/Weapon/AttackArea.gd" type="Script" id=13]
+[ext_resource path="res://Assets/Sound/Player/katana_01.ogg" type="AudioStream" id=15]
+[ext_resource path="res://Assets/Sound/Player/katana_02.ogg" type="AudioStream" id=16]
+[ext_resource path="res://Scripts/States/PlayerStates/attack_air_default_state.gd" type="Script" id=17]
+[ext_resource path="res://Assets/Sound/Player/step_1.ogg" type="AudioStream" id=18]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 23, 17 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 4.41463, 17 )
+
+[sub_resource type="Animation" id=3]
+length = 0.5
+step = 0.03
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Images:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.03, 0.06, 0.18, 0.27, 0.33, 0.39, 0.45 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 12, 13, 14, 15, 16, 17, 18, 19 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("pivot/AttackArea/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.36, 0.48 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("pivot/AttackArea/CollisionShape2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 46, -6 ) ]
+}
+tracks/3/type = "audio"
+tracks/3/path = NodePath("AudioStreamPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": [ {
+"end_offset": 0.05,
+"start_offset": 0.0,
+"stream": ExtResource( 15 )
+} ],
+"times": PoolRealArray( 0.27 )
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.32
+step = 0.03
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Images:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.03, 0.09, 0.18, 0.24, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 19, 20, 21, 22, 23, 24 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("pivot/AttackArea/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.18, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("pivot/AttackArea/CollisionShape2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.36 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 59, -6 ) ]
+}
+tracks/3/type = "audio"
+tracks/3/path = NodePath("AudioStreamPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 16 )
+} ],
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "attack_air_1"
+length = 0.15
+step = 0.03
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Images:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.03, 0.06 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 28, 29, 30 ]
+}
+
+[sub_resource type="Animation" id=6]
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Images:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.25, 0.3, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 31, 32, 33, 34, 35, 36 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Images:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 31, 32, 33 ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.55
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Images:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.3, 0.45 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Images:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 25, 26 ]
+}
+
+[sub_resource type="Animation" id=10]
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Images:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 5, 6, 7, 8, 9, 10, 11 ]
+}
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 5, 18 )
+
+[node name="Player" groups=[
+"Players",
+] instance=ExtResource( 1 )]
+z_index = 99
+script = ExtResource( 4 )
+speed = 150.0
+
+[node name="Images" parent="pivot" index="0"]
+texture = ExtResource( 2 )
+hframes = 39
+frame = 19
+
+[node name="AttackArea" type="Area2D" parent="pivot" index="1" groups=[
+"Weapon",
+]]
+script = ExtResource( 13 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/AttackArea" index="0"]
+position = Vector2( 46, -6 )
+shape = SubResource( 1 )
+disabled = true
+
+[node name="Collision" parent="." index="1"]
+visible = false
+position = Vector2( -1, 1 )
+shape = SubResource( 2 )
+
+[node name="Idle" type="Node" parent="StateMachine" index="0"]
+script = ExtResource( 6 )
+
+[node name="Run" type="Node" parent="StateMachine" index="1"]
+script = ExtResource( 7 )
+
+[node name="Jump" type="Node" parent="StateMachine" index="2"]
+script = ExtResource( 8 )
+
+[node name="Fall" type="Node" parent="StateMachine" index="3"]
+script = ExtResource( 9 )
+
+[node name="Dead" type="Node" parent="StateMachine" index="4"]
+script = ExtResource( 10 )
+
+[node name="Attack" type="Node" parent="StateMachine" index="5"]
+script = ExtResource( 11 )
+
+[node name="Hit" type="Node" parent="StateMachine" index="6"]
+script = ExtResource( 12 )
+
+[node name="Dash" type="Node" parent="StateMachine" index="7"]
+script = ExtResource( 5 )
+
+[node name="Attack_Air" type="Node" parent="StateMachine" index="8"]
+script = ExtResource( 17 )
+
+[node name="Anim" parent="." index="3"]
+anims/attack_1 = SubResource( 3 )
+anims/attack_2 = SubResource( 4 )
+anims/attack_air_1 = SubResource( 5 )
+anims/die = SubResource( 6 )
+anims/hit = SubResource( 7 )
+anims/idle = SubResource( 8 )
+anims/jump = SubResource( 9 )
+anims/run = SubResource( 10 )
+
+[node name="Detector_colision" type="Area2D" parent="." index="4"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector_colision" index="0"]
+position = Vector2( -1, 1 )
+shape = SubResource( 11 )
+
+[node name="CameraAnchor" type="Position2D" parent="." index="5"]
+
+[node name="Camera2D" type="Camera2D" parent="CameraAnchor" index="0"]
+current = true
+smoothing_enabled = true
+smoothing_speed = 15.0
+drag_margin_left = 0.0
+drag_margin_top = 0.0
+drag_margin_right = 0.0
+drag_margin_bottom = 0.0
+editor_draw_limits = true
+script = ExtResource( 3 )
+
+[node name="PositionTween" type="Tween" parent="CameraAnchor/Camera2D" index="0"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="CameraAnchor/Camera2D" index="1"]
+visible = false
+color = Color( 0.737289, 0.769888, 0.824219, 1 )
+
+[node name="Label" type="Label" parent="." index="6"]
+visible = false
+margin_left = -14.8703
+margin_top = -19.7317
+margin_right = 25.1297
+margin_bottom = -5.7317
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="7"]
+stream = ExtResource( 18 )
+[connection signal="animation_finished" from="Anim" to="StateMachine/Attack" method="_on_Anim_animation_finished"]
+[connection signal="animation_finished" from="Anim" to="StateMachine/Attack_Air" method="_on_Anim_animation_finished"]
+[connection signal="area_entered" from="Detector_colision" to="." method="_on_Detector_colision_area_entered"]
+[connection signal="body_entered" from="Detector_colision" to="." method="_on_Detector_colision_body_entered"]

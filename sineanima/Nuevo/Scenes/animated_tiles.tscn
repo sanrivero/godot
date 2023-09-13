@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Nuevo/Sprites/Tiles_sprites/Animated_sprites/Water/water_tile_0.png" type="Texture" id=1]
+[ext_resource path="res://Nuevo/Sprites/Tiles_sprites/Animated_sprites/Water/water_tile_1.png" type="Texture" id=2]
+
+[sub_resource type="AnimatedTexture" id=1]
+frames = 2
+fps = 2.0
+frame_0/texture = ExtResource( 1 )
+frame_1/texture = ExtResource( 2 )
+frame_1/delay_sec = 0.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = SubResource( 1 )
+centered = false

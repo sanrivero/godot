@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Effects/Leaf_material.tres" type="Material" id=1]
+[ext_resource path="res://Assets/Enviroment/sakura.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Enviroment/sakura_leaf.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 3.28265, 111.959 )
+
+[node name="Sakura" type="Area2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( -11.4101, -40.6785 )
+scale = Vector2( 1, 0.72 )
+lifetime = 10.0
+process_material = ExtResource( 1 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -27.9403, 0 )
+scale = Vector2( 3.06201, 0.999683 )
+shape = SubResource( 1 )

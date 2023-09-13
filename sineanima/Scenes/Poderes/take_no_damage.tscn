@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Images/GUI/take_no_Damage.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Poderes/take_no_damage.gd" type="Script" id=2]
+
+[node name="take_no_damage" type="TextureButton"]
+anchor_right = 0.094
+anchor_bottom = 0.197
+margin_right = -7.16
+margin_bottom = -8.04
+size_flags_horizontal = 3
+texture_normal = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_top = 0.836241
+margin_right = 40.0
+margin_bottom = 14.8362
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="." to="." method="_on_take_no_damage_pressed"]

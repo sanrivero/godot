@@ -1,0 +1,214 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/Camera2D.gd" type="Script" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Interface/Interface.tscn" type="PackedScene" id=3]
+
+[sub_resource type="GDScript" id=1]
+resource_name = "world"
+script/source = "extends Node2D
+
+
+var position_x = Vector2( 250 , 500 )
+onready var camera = $Camera2D
+
+var _grass = preload(\"res://scenes/roads/type_1/difficult_1/Grass.tscn\")
+var _boss = preload(\"res://scenes/roads/type_1/bosses/BossRoad.tscn\")
+#var _road = preload(\"res://scenes/roads/type_1/Road.tscn\")
+#var _road2 = preload(\"res://scenes/roads/type_1/ZigZagRoad.tscn\")
+#var _road3 = preload(\"res://scenes/roads/type_1/Road_v3.tscn\")
+#var _road4 = preload(\"res://scenes/roads/type_1/Road_v4.tscn\")
+#var _road5 = preload(\"res://scenes/roads/type_1/Road_v5.tscn\")
+#var _water = preload(\"res://scenes/roads/type_1/Water.tscn\")
+var _list: Array = []
+var counter: int = 0
+var files = []
+
+#var blocks: Array = [_grass,_road,_road2,_road3,_road4,_road5,_water]
+var last_position = 0
+var aux
+
+var viewX
+var viewY
+
+var water_direction = 1
+
+#Up enemies variables
+onready var enemy_spawners = $Camera2D/EnemySpawners.get_children()
+onready var enemy_spawner = preload(\"res://scenes/Spawners/EnemySpawner.tscn\")
+
+var spawn_rate = 15
+var last_spawn = 0
+var spawn_amount = 0
+
+#difficulty params
+var difficult_quantity = 10
+#var difficulty_level = 0
+var difficult_scale = 20
+var last_update = 0
+
+var block_count = 0
+
+#boss
+onready var boss_enemy_spawner = preload(\"res://scenes/Spawners/BossUpSpawner.tscn\")
+var last_boss_spawn = 0
+var boss_roads:Array = []
+var on_boss = false
+
+func _ready():
+	viewX = get_viewport().get_size().x
+	viewY = get_viewport().get_size().y
+	aux = get_viewport().get_size().y / 2
+	update_difficultv2(files)
+
+
+func _process(delta):
+	
+	$Camera2D/Interface/Counter/Label.text = str($Player.max_score)
+	
+	#SUBIR DIFICULTAD
+	if($Player.max_score % difficult_scale == 0) and $Player.max_score != 0:
+		if($Player.max_score > last_update):
+			if(GlobalParams.difficulty_level < difficult_quantity):
+				update_difficultv2(files)
+				last_update = $Player.max_score
+		
+	if(_list.size() == 0):
+		add_block(_grass.instance())
+		add_block(_grass.instance())
+		add_block(_grass.instance())
+		add_block(_grass.instance())
+		add_block(_grass.instance())
+
+	else:
+
+		if(camera.position.y - viewY/2 < _list.back()[1].position.y):
+			#BOSSES
+			if(block_count > 100 and block_count < 200):
+				boss_instance()
+			else:
+				on_boss = false
+				add_block(files[randi()%files.size()].instance())
+	
+	#UP ENEMIES SPAWN
+	if(!on_boss):
+		if($Player.max_score % spawn_rate == 0 and $Player.max_score != 0):
+			if($Player.max_score > last_spawn):
+				#spawn_amount = round(rand_range(1, 3))
+				enemy_spawners.shuffle()
+				for i in spawn_amount:
+					enemy_spawners[i].add_child(enemy_spawner.instance())
+					enemy_spawners[i].get_child(0).spawn_enemy()
+				last_spawn = $Player.max_score
+	
+func add_block(instance):
+	var instance_block_cant = (instance.get_child(0).texture.get_height() / 16)
+	block_count += instance_block_cant
+	add_child(instance)
+	if(last_position == 0):
+		instance.global_position = Vector2(viewX/2, viewY/2)
+		last_position = instance.get_child(0).texture.get_size().y
+	else:
+		instance.global_position = Vector2(viewX/2, ( aux - (last_position + instance.get_child(0).texture.get_size().y ) / 2) )
+		last_position = instance.get_child(0).texture.get_size().y
+		aux = instance.global_position.y
+	_list.append([_list.size(), instance])
+	
+	
+func getLastValue(instance_name):
+	if(_list.empty()):
+		return 0
+	
+	if(instance_name in _list.back()[1].get_name()):
+		0
+	else:
+		return _list.back()[1].get_child(0).texture.get_size().y / 2
+
+
+func get_files_in_derectory(path):
+	var files = []
+	var dir = Directory.new()
+	dir.open(path)
+	dir.list_dir_begin()
+	while(true):
+		var file = dir.get_next()
+		if file == \"\":
+			break
+		elif not file.begins_with(\".\"):
+			files.append(load(path + file))
+	dir.list_dir_end()
+	return files
+
+
+func update_difficult():
+	GlobalParams.difficulty_level = GlobalParams.difficulty_level + 1
+	return get_files_in_derectory(\"res://scenes/roads/type_1/difficult_\"+str(GlobalParams.difficulty_level)+\"/\")
+	
+func update_difficultv2(files):
+	GlobalParams.difficulty_level = GlobalParams.difficulty_level + 1
+	if(GlobalParams.enemies_on_road < 3):
+		GlobalParams.enemies_on_road = GlobalParams.enemies_on_road + 1
+	if(GlobalParams.difficulty_level > 2):
+		if(spawn_amount < 3):
+			spawn_amount = spawn_amount + 1
+	if(GlobalParams.difficulty_level <= 3):
+		files.append_array(get_files_in_derectory(\"res://scenes/roads/type_1/difficult_\"+str(GlobalParams.difficulty_level)+\"/\"))
+	
+func boss_instance():
+	if(!on_boss):
+		for i in enemy_spawners.size():
+			enemy_spawners[i].add_child(boss_enemy_spawner.instance())
+			on_boss = true
+	
+	var boss_road = _boss.instance()
+	boss_roads.append(boss_road)
+	
+	add_block(boss_road)
+
+	
+"
+
+[node name="World" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+script = ExtResource( 1 )
+
+[node name="Interface" parent="Camera2D" instance=ExtResource( 3 )]
+show_behind_parent = true
+margin_left = -60.0
+margin_top = -116.0
+margin_right = -60.0
+margin_bottom = -116.0
+
+[node name="EnemySpawners" type="Node2D" parent="Camera2D"]
+z_index = 5
+
+[node name="Spawner1" type="Position2D" parent="Camera2D/EnemySpawners"]
+position = Vector2( -56, -120 )
+
+[node name="Spawner2" type="Position2D" parent="Camera2D/EnemySpawners"]
+position = Vector2( -40, -120 )
+
+[node name="Spawner3" type="Position2D" parent="Camera2D/EnemySpawners"]
+position = Vector2( -24, -120 )
+
+[node name="Spawner4" type="Position2D" parent="Camera2D/EnemySpawners"]
+position = Vector2( -8, -120 )
+
+[node name="Spawner5" type="Position2D" parent="Camera2D/EnemySpawners"]
+position = Vector2( 8, -120 )
+
+[node name="Spawner6" type="Position2D" parent="Camera2D/EnemySpawners"]
+position = Vector2( 24, -120 )
+
+[node name="Spawner7" type="Position2D" parent="Camera2D/EnemySpawners"]
+position = Vector2( 40, -120 )
+
+[node name="Spawner8" type="Position2D" parent="Camera2D/EnemySpawners"]
+position = Vector2( 56, -120 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 35, 100 )
+z_index = 2

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Sprites/DobleSalto/button.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Poderes/Botones/doble_salto.gd" type="Script" id=2]
+
+[node name="doble_salto" type="TextureButton"]
+margin_left = 40.0
+margin_top = 50.0
+margin_right = 80.0
+margin_bottom = 90.0
+texture_normal = ExtResource( 1 )
+script = ExtResource( 2 )
+[connection signal="pressed" from="." to="." method="_on_doble_salto_pressed"]

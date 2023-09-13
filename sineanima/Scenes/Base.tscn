@@ -1,0 +1,95 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Assets/Tilemaps/grassBlocks.tres" type="TileSet" id=1]
+[ext_resource path="res://Scripts/Mundo/Areas.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Mundo/Base.gd" type="Script" id=3]
+[ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Hud.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Enviroment/Sakura.tscn" type="PackedScene" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 267.3, 102.4 )
+
+[node name="Base" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Areas" type="Node2D" parent="."]
+position = Vector2( 293.996, 139.673 )
+script = ExtResource( 2 )
+
+[node name="area_uno" type="Area2D" parent="Areas"]
+position = Vector2( -337.862, 158.026 )
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/area_uno"]
+position = Vector2( -0.0259132, 0.704407 )
+scale = Vector2( 1.55989, 1.85486 )
+shape = SubResource( 1 )
+
+[node name="Label" type="Label" parent="Areas/area_uno"]
+margin_left = -23.0454
+margin_top = -3.61496
+margin_right = 25.9546
+margin_bottom = 10.385
+text = "MATRIZ"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Area2D" type="Area2D" parent="Areas"]
+position = Vector2( 70.3406, 155.637 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area2D"]
+shape = SubResource( 2 )
+
+[node name="Label" type="Label" parent="Areas/Area2D"]
+margin_left = -12.2005
+margin_top = -4.06683
+margin_right = 74.7995
+margin_bottom = 9.93317
+text = "PLATAFORMA"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hud" parent="." instance=ExtResource( 5 )]
+
+[node name="coleccion" type="Label" parent="Hud"]
+margin_right = 40.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
+position = Vector2( 277.954, 285.421 )
+
+[node name="CameraAnchors" type="Node2D" parent="."]
+
+[node name="Position2D" type="Position2D" parent="CameraAnchors"]
+position = Vector2( 365.991, 145.038 )
+
+[node name="RoomBoundaries" type="Area2D" parent="."]
+visible = false
+position = Vector2( 5.88883, 20.2429 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomBoundaries"]
+position = Vector2( 326.8, 178.952 )
+shape = SubResource( 3 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 8
+format = 1
+tile_data = PoolIntArray( 786430, 0, 131076, 786431, 0, 131077, 720896, 0, 131077, 720897, 0, 131077, 720898, 0, 131077, 720899, 0, 131077, 720900, 0, 131077, 720901, 0, 131077, 720902, 0, 131077, 720903, 0, 131077, 720904, 0, 131077, 720905, 0, 131077, 720906, 0, 131077, 720907, 0, 131077, 720908, 0, 131078 )
+
+[node name="Sakura" parent="." instance=ExtResource( 6 )]
+position = Vector2( 180.925, 250.669 )
+[connection signal="body_entered" from="Areas/area_uno" to="Areas" method="_on_area_uno_body_entered"]
+[connection signal="area_entered" from="Areas/Area2D" to="Areas" method="_on_Area2D_area_entered"]
+[connection signal="body_entered" from="Areas/Area2D" to="Areas" method="_on_Area2D_body_entered"]

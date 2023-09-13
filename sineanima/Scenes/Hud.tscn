@@ -1,0 +1,408 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Scripts/Hud/Hud.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/corazon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Images/GUI/arrows/rightArrow.png" type="Texture" id=3]
+[ext_resource path="res://Images/GUI/touch_jump.png" type="Texture" id=5]
+[ext_resource path="res://Images/GUI/arrows/leftArrow.png" type="Texture" id=7]
+[ext_resource path="res://Images/GUI/attack/attackButton.png" type="Texture" id=9]
+[ext_resource path="res://Images/modalbackground.png" type="Texture" id=11]
+[ext_resource path="res://Images/close.png" type="Texture" id=12]
+[ext_resource path="res://icon.png" type="Texture" id=13]
+[ext_resource path="res://Scripts/Hud/skill_tree.gd" type="Script" id=14]
+[ext_resource path="res://Images/close_button.png" type="Texture" id=15]
+[ext_resource path="res://Images/GUI/arrows/jumpArrow.png" type="Texture" id=16]
+[ext_resource path="res://Images/GUI/arrows/downArrow.png" type="Texture" id=17]
+
+[node name="Hud" type="CanvasLayer"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 192.0, 0.0 ],
+"_edit_vertical_guides_": [ 48.0, 89.0 ]
+}
+
+[node name="corazon" parent="." instance=ExtResource( 2 )]
+position = Vector2( 66.1619, 27.2693 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Oro" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control_1" type="Control" parent="."]
+margin_left = 590.0
+margin_top = 170.0
+margin_right = 630.0
+margin_bottom = 210.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control_2" type="Control" parent="."]
+margin_left = 510.0
+margin_top = 180.0
+margin_right = 550.0
+margin_bottom = 220.0
+
+[node name="Control_3" type="Control" parent="."]
+margin_left = 460.0
+margin_top = 220.0
+margin_right = 500.0
+margin_bottom = 260.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2( -28.6171, -0.000125885 )
+
+[node name="Izquierda" type="TouchScreenButton" parent="Node2D"]
+position = Vector2( 39, 225 )
+scale = Vector2( 3, 3 )
+normal = ExtResource( 7 )
+action = "ui_left"
+
+[node name="Saltar" type="TouchScreenButton" parent="Node2D"]
+position = Vector2( 549, 231 )
+scale = Vector2( 3, 3 )
+normal = ExtResource( 16 )
+passby_press = true
+action = "jump"
+
+[node name="Derecha" type="TouchScreenButton" parent="Node2D"]
+position = Vector2( 138, 225 )
+scale = Vector2( 3, 3 )
+normal = ExtResource( 3 )
+action = "ui_right"
+
+[node name="Ataque" type="TouchScreenButton" parent="Node2D"]
+position = Vector2( 498, 249 )
+scale = Vector2( 3, 3 )
+normal = ExtResource( 9 )
+action = "attack"
+
+[node name="Subir" type="TouchScreenButton" parent="Node2D"]
+position = Vector2( 96, 192 )
+scale = Vector2( 0.15, 0.15 )
+normal = ExtResource( 5 )
+action = "ui_subir"
+
+[node name="Bajar" type="TouchScreenButton" parent="Node2D"]
+position = Vector2( 108, 258 )
+rotation = 3.14159
+scale = Vector2( -3, -3 )
+normal = ExtResource( 17 )
+action = "ui_bajar"
+
+[node name="Seleccion" type="PopupMenu" parent="."]
+margin_left = 190.0
+margin_top = 30.0
+margin_right = 470.0
+margin_bottom = 190.0
+
+[node name="Sprite" type="Sprite" parent="Seleccion"]
+position = Vector2( 139.73, 79.7377 )
+scale = Vector2( 0.539499, 0.52459 )
+texture = ExtResource( 11 )
+
+[node name="CloseButton" type="TextureButton" parent="Seleccion"]
+margin_left = 230.0
+margin_right = 270.0
+margin_bottom = 40.0
+texture_normal = ExtResource( 12 )
+
+[node name="position" type="Node2D" parent="Seleccion"]
+position = Vector2( 160, 90 )
+
+[node name="Container2" type="Container" parent="Seleccion/position"]
+margin_left = -80.0
+margin_top = -20.0
+margin_right = -40.0
+margin_bottom = 20.0
+
+[node name="Container" type="Container" parent="Seleccion/position"]
+margin_top = -20.0
+margin_right = 40.0
+margin_bottom = 20.0
+
+[node name="button" type="Node2D" parent="Seleccion"]
+position = Vector2( -170, -10 )
+
+[node name="Deseleccion" type="PopupMenu" parent="."]
+margin_left = 190.0
+margin_top = 30.0
+margin_right = 450.0
+margin_bottom = 160.0
+
+[node name="Sprite" type="Sprite" parent="Deseleccion"]
+position = Vector2( 129.75, 64.7869 )
+scale = Vector2( 0.500963, 0.42623 )
+texture = ExtResource( 11 )
+
+[node name="closebutton_deseleccion" type="TextureButton" parent="Deseleccion"]
+margin_left = 220.0
+margin_right = 260.0
+margin_bottom = 40.0
+texture_normal = ExtResource( 12 )
+
+[node name="position" type="Node2D" parent="Deseleccion"]
+position = Vector2( 140, 70 )
+
+[node name="Container" type="Container" parent="Deseleccion/position"]
+margin_left = -80.0
+margin_top = -10.0
+margin_right = -40.0
+margin_bottom = 30.0
+
+[node name="Container2" type="Container" parent="Deseleccion/position"]
+margin_left = -20.0
+margin_top = -10.0
+margin_right = 20.0
+margin_bottom = 30.0
+
+[node name="Container3" type="Container" parent="Deseleccion/position"]
+margin_left = 30.0
+margin_right = 70.0
+margin_bottom = 40.0
+
+[node name="button" type="Node2D" parent="Deseleccion"]
+position = Vector2( -190, -20 )
+
+[node name="SkillTree" type="Control" parent="." groups=[
+"persistent",
+]]
+visible = false
+margin_left = 159.0
+margin_top = 2.0
+margin_right = 565.0
+margin_bottom = 247.0
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="SkillTree"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Defense" type="Tabs" parent="SkillTree/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+tab_align = 0
+
+[node name="Health" type="TextureButton" parent="SkillTree/TabContainer/Defense"]
+margin_left = 33.7167
+margin_top = 22.2224
+margin_right = 73.7167
+margin_bottom = 62.2224
+texture_normal = ExtResource( 13 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthProgress" type="TextureProgress" parent="SkillTree/TabContainer/Defense/Health"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 41.0
+margin_top = 1.0
+margin_right = 42.0
+margin_bottom = 5.0
+max_value = 3.0
+step = 0.0
+texture_progress = ExtResource( 12 )
+fill_mode = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TakeNoDamage" type="TextureButton" parent="SkillTree/TabContainer/Defense"]
+margin_left = 148.442
+margin_top = 22.2224
+margin_right = 188.442
+margin_bottom = 62.2224
+texture_normal = ExtResource( 13 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TakeNoDamageProgress" type="TextureProgress" parent="SkillTree/TabContainer/Defense/TakeNoDamage"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 41.0
+margin_top = 1.0
+margin_right = 42.0
+margin_bottom = 5.0
+max_value = 3.0
+step = 0.0
+texture_progress = ExtResource( 12 )
+fill_mode = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LessDamage" type="TextureButton" parent="SkillTree/TabContainer/Defense"]
+margin_left = 266.0
+margin_top = 17.0
+margin_right = 309.0
+margin_bottom = 61.0
+texture_normal = ExtResource( 13 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LessDamageProgress" type="TextureProgress" parent="SkillTree/TabContainer/Defense/LessDamage"]
+margin_left = 43.0
+margin_top = 3.96066
+margin_right = 74.0
+margin_bottom = 43.9607
+max_value = 4.0
+texture_progress = ExtResource( 12 )
+fill_mode = 3
+
+[node name="Movement" type="Tabs" parent="SkillTree/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+tab_align = 0
+
+[node name="DoubleJump" type="TextureButton" parent="SkillTree/TabContainer/Movement"]
+margin_left = 117.267
+margin_top = 23.0621
+margin_right = 157.267
+margin_bottom = 63.0621
+texture_normal = ExtResource( 13 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DoubleJumpProgress" type="TextureProgress" parent="SkillTree/TabContainer/Movement/DoubleJump"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 39.0
+margin_right = 12.0
+max_value = 1.0
+texture_progress = ExtResource( 13 )
+
+[node name="Dash" type="TextureButton" parent="SkillTree/TabContainer/Movement"]
+margin_left = 117.267
+margin_top = 23.0621
+margin_right = 157.267
+margin_bottom = 63.0621
+texture_normal = ExtResource( 13 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DashProgress" type="TextureProgress" parent="SkillTree/TabContainer/Movement/Dash"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 39.0
+margin_right = 12.0
+max_value = 1.0
+texture_progress = ExtResource( 13 )
+
+[node name="RunSpeed" type="TextureButton" parent="SkillTree/TabContainer/Movement"]
+margin_left = 118.747
+margin_top = 106.701
+margin_right = 158.747
+margin_bottom = 146.701
+texture_normal = ExtResource( 13 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RunSpeedProgress" type="TextureProgress" parent="SkillTree/TabContainer/Movement/RunSpeed"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 39.0
+margin_right = 12.0
+max_value = 3.0
+texture_progress = ExtResource( 13 )
+
+[node name="Gravity" type="TextureButton" parent="SkillTree/TabContainer/Movement"]
+margin_left = 118.747
+margin_top = 106.701
+margin_right = 158.747
+margin_bottom = 146.701
+texture_normal = ExtResource( 13 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GravityProgress" type="TextureProgress" parent="SkillTree/TabContainer/Movement/Gravity"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 39.0
+margin_right = 12.0
+max_value = 3.0
+texture_progress = ExtResource( 13 )
+
+[node name="Attack" type="Tabs" parent="SkillTree/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Lifesteal" type="TextureButton" parent="SkillTree/TabContainer/Attack"]
+margin_left = 46.3229
+margin_top = 18.1418
+margin_right = 98.3229
+margin_bottom = 70.1418
+texture_normal = ExtResource( 13 )
+expand = true
+
+[node name="LifestealProgress" type="TextureProgress" parent="SkillTree/TabContainer/Attack/Lifesteal"]
+margin_left = 50.0
+margin_top = 4.0
+margin_right = 91.0
+margin_bottom = 48.0
+max_value = 3.0
+texture_progress = ExtResource( 12 )
+fill_mode = 3
+
+[node name="Exit" type="TextureButton" parent="SkillTree"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -15.7013
+margin_top = 7.32725
+margin_right = 0.298706
+margin_bottom = 23.3272
+texture_normal = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Seleccion/CloseButton" to="." method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="Deseleccion/closebutton_deseleccion" to="." method="_on_closebutton_deseleccion_pressed"]
+[connection signal="pressed" from="SkillTree/TabContainer/Defense/Health" to="SkillTree" method="_on_Health_pressed"]
+[connection signal="pressed" from="SkillTree/TabContainer/Defense/TakeNoDamage" to="SkillTree" method="_on_TakeNoDamage_pressed"]
+[connection signal="pressed" from="SkillTree/TabContainer/Defense/LessDamage" to="SkillTree" method="_on_LessDamage_pressed"]
+[connection signal="pressed" from="SkillTree/TabContainer/Movement/DoubleJump" to="SkillTree" method="_on_DoubleJump_pressed"]
+[connection signal="pressed" from="SkillTree/TabContainer/Movement/Dash" to="SkillTree" method="_on_Dash_pressed"]
+[connection signal="pressed" from="SkillTree/TabContainer/Movement/RunSpeed" to="SkillTree" method="_on_RunSpeed_pressed"]
+[connection signal="pressed" from="SkillTree/TabContainer/Movement/Gravity" to="SkillTree" method="_on_Gravity_pressed"]
+[connection signal="pressed" from="SkillTree/TabContainer/Attack/Lifesteal" to="SkillTree" method="_on_Lifesteal_pressed"]
+[connection signal="pressed" from="SkillTree/Exit" to="SkillTree" method="_on_Exit_pressed"]
